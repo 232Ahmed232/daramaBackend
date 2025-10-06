@@ -221,10 +221,103 @@ const refreshTokenAccess = asyncHandeler(async(req,res)=>{
 })
 
 
+const changeCurrentPassword = asyncHandeler(async(req,res)=>{
+    const {oldPassword, newPassword} = req.body
+
+    const user = await User.findById(req.user?._id)
+
+    const isPasswordCorrect  = await user.isPasswordCorrect(oldPassword)
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(404,"In correvt password")
+    }
+
+    user.password = newPassword
+
+     await user.save({validateBeforeSave:false})
+
+     return res.status(200)
+     .json(new ApiResponse(200,{},"PASSWORD CHANGE SUCCESSFULLY"))
+    
+})
+
+
+const getCurrentUser = asyncHandeler(async(req,res)=>{
+
+    // const user = await User.findById(req.user?._id)
+
+    // if (!user) {
+    //     throw new ApiError(404,"No User found")
+    // }
+
+    return res.status(200)
+    .json(
+        new ApiResponse(200,req.user,"User is found")
+    )
+    
+})
+
+
+const updateUserDetails = asyncHandeler(async(req,res)=>{
+    const {fullName,email} =req.body
+
+    if (!fullName && !email) {
+        throw new ApiError(400, "All fields are equired")
+    }
+
+    User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set:{
+                fullName,
+                email
+            }
+        },
+        {new:true}
+    ).select("-password")
+
+    return res.status(200)
+    .json(200, user , "Current user successFully")
+})
+
+const avatarUserupdate = asyncHandeler(async(req,res)=>{
+
+    const avatarLocalPath = req.file?.path
+
+    if (avatarLocalPath) {
+        throw new ApiError(400,"Avatar file is mising")
+    }
+
+    const avatar =  uploadOnCloudinary(avatarLocalPath)
+
+    if (!avatar.url) {
+        throw new ApiError(400,"Avatar file is mising")
+    }
+
+    const user = User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set:{
+                avatar:avatar.url
+            }
+        },
+        {new:true}
+    ).select("-password")
+
+     return res.status(200)
+     .json(
+        200,
+        new ApiResponse(200, user,"Avatar file is updated")
+     )      
+
+})
 
 export {
     registerUser,
     loginUser,
     logOut,
-    refreshTokenAccess
+    refreshTokenAccess,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateUserDetails
 }
