@@ -29,9 +29,7 @@ const userSchema = new Schema({
     avatar:{
         type:String
     },
-    coverImage:{
-        type:String
-    },
+    
     rating:[
         {
             type : Schema.Types.ObjectId,
