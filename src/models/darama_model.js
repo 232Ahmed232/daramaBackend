@@ -5,6 +5,10 @@ const daramaSchema = new Schema({
         type:String,
         required:true
     },
+    poster:{
+        type:String,
+        default:"https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+    },
     
     plot:{
         type:String,

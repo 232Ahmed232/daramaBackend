@@ -20,7 +20,11 @@ app.use(cookieParser())
 //routes 
 import userRouter from "./routes/user_routes.js"
 
+import actorRoutes from "./routes/actor_routes.js"
+
+
 
 app.use("/api/v1/users",userRouter)
+app.use("/api/v1/actors",actorRoutes)
 
 export {app}
