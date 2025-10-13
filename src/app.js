@@ -24,9 +24,12 @@ import actorRoutes from "./routes/actor_routes.js"
 
 import daramaRoutes from "./routes/darama_route.js"
 
+import ratingRoute from "./routes/rating_route.js"
+
 
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/actors",actorRoutes)
 app.use("/api/v1/daramas",daramaRoutes)
+app.use("/api/v1/ratings",ratingRoute)
 
 export {app}
