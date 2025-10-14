@@ -6,6 +6,7 @@ import { veriftJWT } from "../middlewares/auth_middlewear.js";
 
 const router = Router()
 
+
 router.route("/add").post(veriftJWT ,addRating)
 
 
