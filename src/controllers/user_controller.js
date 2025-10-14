@@ -42,7 +42,10 @@ const registerUser = asyncHandeler(async(req,res)=>{
         throw new ApiError(409,"User with email or username exist")
     }
 
+    // console.log(req.files);
+    
     const avatarLocalPath = req.files?.avatar[0]?.path
+    
     
     
 

@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Actor } from "../models/actor_model.js";
 import { Darama } from "../models/darama_model.js";
-
+import { getDramasWithActorsAndRatings } from "../db/Db_aggregation.js";
 
 
 
@@ -44,4 +44,14 @@ const addDarama = asyncHandeler(async(req,res)=>{
 
 })
 
-export {addDarama}
+const ratedDaramas = asyncHandeler(async(req,res)=>{
+  const darama = await getDramasWithActorsAndRatings()
+  // console.log(darama);
+
+  res.status(200).json(
+    new ApiResponse(200, darama ,"Rated Daram")
+  )
+})
+
+
+export {addDarama, ratedDaramas}

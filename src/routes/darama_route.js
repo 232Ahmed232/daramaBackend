@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { addDarama } from "../controllers/darama_controller.js";
+import { addDarama, ratedDaramas } from "../controllers/darama_controller.js";
 
 
 const router = Router()
 
 router.route("/add").get(addDarama)
+router.route("/rated").get(ratedDaramas)
+
 
 export default router
