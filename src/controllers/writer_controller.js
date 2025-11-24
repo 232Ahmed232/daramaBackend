@@ -7,6 +7,15 @@ import { Writer } from "../models/writer_model.js";
 const addWriter = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
 
+
+      const existedWriter = await Writer.findOne({
+        $or:[{username},{fullName}]
+    })
+
+    if (existedWriter) {
+        throw new ApiError(409,"Writer exist")
+    }
+
     if (
         [fullName,username].some((field)=> field?.trim()==="")
     ) {

@@ -7,6 +7,14 @@ import { OST } from "../models/ost_model.js";
 const addOST = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
 
+      const existedost = await OST.findOne({
+        $or:[{username},{fullName}]
+    })
+
+    if (existedost) {
+        throw new ApiError(409,"ost exist")
+    }
+
     if (
         [fullName,username].some((field)=> field?.trim()==="")
     ) {

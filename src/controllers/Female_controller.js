@@ -7,6 +7,14 @@ import {  Female_actor } from "../models/Female_actor.js";
 const addFemaleActor = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
 
+      const existedFemale = await Female_actor.findOne({
+        $or:[{username},{fullName}]
+    })
+
+    if (existedFemale) {
+        throw new ApiError(409,"Female Actors exist")
+    }
+
     if (
         [fullName,username].some((field)=> field?.trim()==="")
     ) {

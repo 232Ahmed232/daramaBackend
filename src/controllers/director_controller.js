@@ -7,6 +7,14 @@ import { Director } from "../models/director_model.js";
 const addDirector = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
 
+      const existedDirector = await Director.findOne({
+        $or:[{username},{fullName}]
+    })
+
+    if (existedDirector) {
+        throw new ApiError(409,"dIRECTOR exist")
+    }
+
     if (
         [fullName,username].some((field)=> field?.trim()==="")
     ) {

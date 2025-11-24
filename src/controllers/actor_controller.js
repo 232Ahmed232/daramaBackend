@@ -7,6 +7,14 @@ import { Actor } from "../models/actor_model.js";
 const addActor = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
 
+      const existedActor = await Actor.findOne({
+        $or:[{username},{fullName}]
+    })
+
+    if (existedActor) {
+        throw new ApiError(409,"Actor  exist")
+    }
+
     if (
         [fullName,username].some((field)=> field?.trim()==="")
     ) {
