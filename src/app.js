@@ -32,10 +32,14 @@ import writerroutes from "./routes/writer_routes.js"
 
 import director_routes from "./routes/director_routes.js"
 
+import ost_routes from "./routes/ost_routes.js"
+
 
 app.use("/api/v1/users",userRouter)
 
 app.use("/api/v1/actors",actorRoutes)
+
+app.use("/api/v1/ost",ost_routes)
 
 app.use("/api/v1/Femaleactors",Femaleactorroutes)
 
