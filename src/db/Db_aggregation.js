@@ -1,5 +1,9 @@
 import { Darama } from "../models/darama_model.js";
 import { Actor } from "../models/actor_model.js";
+import { Director } from "../models/director_model.js";
+import { OST } from "../models/ost_model.js";
+import { Female_actor } from "../models/Female_actor.js";
+import { Writer } from "../models/writer_model.js";
 import {User} from "../models/user_model.js"
 import {Rating} from "../models/Rating_model.js"
 
@@ -34,6 +38,8 @@ const getDramasWithActorsAndRatings = async () => {
   return dramas;
 };
 
+// Actors 
+
 const getActorsWithDramas = async () => {
   const actors = await Actor.aggregate([
     {
@@ -59,6 +65,125 @@ const getActorsWithDramas = async () => {
   ]);
   return actors;
 };
+
+// Directors
+
+const getDirectorsWithDramas = async () => {
+  const directors = await Director.aggregate([
+    {
+      $lookup: {
+        from: "dramas", // or "darama" if you kept that name
+        localField: "popularDarams",
+        foreignField: "_id",
+        as: "dramaDetails"
+      }
+    },
+    {
+      $project: {
+        username: 1,
+        fullName: 1,
+        votes: 1,
+        totalDramas: { $size: "$dramaDetails" },
+        dramaDetails: { name: 1, year: 1, channel: 1 }
+      }
+    },
+    {
+      $sort: { votes: -1 }
+    }
+  ]);
+  return directors;
+};
+
+// Writers
+
+const getWritersWithDramas = async () => {
+  const writers = await Writer.aggregate([
+    {
+      $lookup: {
+        from: "dramas", // or "darama" if you kept that name
+        localField: "popularDarams",
+        foreignField: "_id",
+        as: "dramaDetails"
+      }
+    },
+    {
+      $project: {
+        username: 1,
+        fullName: 1,
+        votes: 1,
+        totalDramas: { $size: "$dramaDetails" },
+        dramaDetails: { name: 1, year: 1, channel: 1 }
+      }
+    },
+    {
+      $sort: { votes: -1 }
+    }
+  ]);
+  return writers;
+
+};
+
+
+// Female Actors
+
+const getFemaleActorsWithDramas = async () => {
+  const females = await Female_actor.aggregate([
+    {
+      $lookup: {
+        from: "dramas", // or "darama" if you kept that name
+        localField: "popularDarams",
+        foreignField: "_id",
+        as: "dramaDetails"
+      }
+    },
+    {
+      $project: {
+        username: 1,
+        fullName: 1,
+        votes: 1,
+        totalDramas: { $size: "$dramaDetails" },
+        dramaDetails: { name: 1, year: 1, channel: 1 }
+      }
+    },
+    {
+      $sort: { votes: -1 }
+    }
+  ]);
+  return females;
+
+};
+
+
+//OST
+
+const getOSTWithDramas = async () => {
+  const ost = await OST.aggregate([
+    {
+      $lookup: {
+        from: "dramas", // or "darama" if you kept that name
+        localField: "popularDarams",
+        foreignField: "_id",
+        as: "dramaDetails"
+      }
+    },
+    {
+      $project: {
+        username: 1,
+        fullName: 1,
+        votes: 1,
+        totalDramas: { $size: "$dramaDetails" },
+        dramaDetails: { name: 1, year: 1, channel: 1 }
+      }
+    },
+    {
+      $sort: { votes: -1 }
+    }
+  ]);
+  return ost;
+
+};
+
+
 
 const getUsersWithRatings = async () => {
   const users = await User.aggregate([
@@ -141,6 +266,12 @@ export {
   getDramasWithActorsAndRatings,
   getTopRatedDramas,
   getUsersWithRatings,
-  getActorsWithDramas
+  getActorsWithDramas,
+  getDirectorsWithDramas,
+  getFemaleActorsWithDramas,
+  getOSTWithDramas,
+  getWritersWithDramas,
+  
+
 }
 
