@@ -26,10 +26,25 @@ import daramaRoutes from "./routes/darama_route.js"
 
 import ratingRoute from "./routes/rating_route.js"
 
+import Femaleactorroutes from "./routes/Female_actor_routes.js"
+
+import writerroutes from "./routes/writer_routes.js"
+
+import director_routes from "./routes/director_routes.js"
+
 
 app.use("/api/v1/users",userRouter)
+
 app.use("/api/v1/actors",actorRoutes)
+
+app.use("/api/v1/Femaleactors",Femaleactorroutes)
+
+app.use("/api/v1/writer",writerroutes)
+
+app.use("/api/v1/director",director_routes)
+
 app.use("/api/v1/daramas",daramaRoutes)
+
 app.use("/api/v1/ratings",ratingRoute)
 
 export {app}
