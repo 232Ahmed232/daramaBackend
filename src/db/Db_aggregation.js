@@ -19,6 +19,38 @@ const getDramasWithActorsAndRatings = async () => {
     },
     {
       $lookup: {
+        from: "writers",
+        localField: "writers",
+        foreignField: "_id",
+        as: "writerDetails"
+      }
+    },
+    {
+      $lookup: {
+        from: "directors",
+        localField: "directors",
+        foreignField: "_id",
+        as: "directorsDetails"
+      }
+    },
+    {
+      $lookup: {
+        from: "female_actors",
+        localField: "Female_actors",
+        foreignField: "_id",
+        as: "Female_ActorsDetails"
+      }
+    },
+    {
+      $lookup: {
+        from: "osts",
+        localField: "ost",
+        foreignField: "_id",
+        as: "OST"
+      }
+    },
+    {
+      $lookup: {
         from: "ratings",
         localField: "_id",
         foreignField: "drama",

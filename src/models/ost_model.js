@@ -33,4 +33,4 @@ const ostSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-export const OST = mongoose.model("OST",ostSchema)
+export const OST = mongoose.model("Ost",ostSchema)
