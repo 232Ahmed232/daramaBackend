@@ -1,7 +1,7 @@
 import { asyncHandeler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Female_actor, Female_actor } from "../models/Female_actor.js";
+import {  Female_actor } from "../models/Female_actor.js";
 
 
 const addFemaleActor = asyncHandeler(async(req,res)=>{
