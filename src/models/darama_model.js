@@ -14,10 +14,12 @@ const daramaSchema = new Schema({
         type:String,
         
     },
-    ost:{
-        type:String,
-        
-    },
+    ost:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"OST"
+        }
+    ],
     year:{
         type:Number,
         required:true
@@ -31,13 +33,15 @@ const daramaSchema = new Schema({
     },
     writers:[
         {
-        type:String,
-    },
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Writer"
+        }
     ],
     directors:[
         {
-        type:String,
-    },
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Director"
+        }
     ],
     producers:[
         {
@@ -53,6 +57,12 @@ const daramaSchema = new Schema({
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:"Actor"
+        }
+    ],
+    Female_actors:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Female_actor"
         }
     ],
     
