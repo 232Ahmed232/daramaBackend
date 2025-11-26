@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Actor } from "../models/actor_model.js";
 import { getActorsWithDramas } from "../db/Db_aggregation.js";
+import { Darama } from "../models/darama_model.js";
 
 
 const addActor = asyncHandeler(async(req,res)=>{
@@ -38,6 +39,29 @@ const addActor = asyncHandeler(async(req,res)=>{
 
 })
 
+const addingPopulardarams = asyncHandeler(async(req,res)=>{
+    const drama = await Darama.find({name:{$in:['Tere Bin']}})
+
+    const changeActor = await Actor.findOneAndUpdate(
+        {
+            fullName:"Wahaj Ali"
+        },
+        {
+            $set:{
+            popularDarams:drama.map(darm => darm)
+            }
+        },
+        { new: true },
+    )   
+    await changeActor.save()
+     
+     const gettingActors = await getActorsWithDramas()
+        res.status(200).json(
+        new ApiResponse(200,changeActor, "Updated actors")
+      )
+})
+
+
 const getActor = asyncHandeler(async(req,res)=>{
     const gettingActors = await getActorsWithDramas()
     res.status(200).json(
@@ -46,9 +70,11 @@ const getActor = asyncHandeler(async(req,res)=>{
 })
 
 
+
 export {
     addActor,
-    getActor
+    getActor,
+    addingPopulardarams
 }
 
 

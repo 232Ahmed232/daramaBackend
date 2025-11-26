@@ -76,7 +76,7 @@ const getActorsWithDramas = async () => {
   const actors = await Actor.aggregate([
     {
       $lookup: {
-        from: "dramas", // or "darama" if you kept that name
+        from: "daramas", // or "darama" if you kept that name
         localField: "popularDarams",
         foreignField: "_id",
         as: "dramaDetails"
@@ -104,7 +104,7 @@ const getDirectorsWithDramas = async () => {
   const directors = await Director.aggregate([
     {
       $lookup: {
-        from: "dramas", // or "darama" if you kept that name
+        from: "daramas", // or "darama" if you kept that name
         localField: "popularDarams",
         foreignField: "_id",
         as: "dramaDetails"
@@ -132,7 +132,7 @@ const getWritersWithDramas = async () => {
   const writers = await Writer.aggregate([
     {
       $lookup: {
-        from: "dramas", // or "darama" if you kept that name
+        from: "daramas", // or "darama" if you kept that name
         localField: "popularDarams",
         foreignField: "_id",
         as: "dramaDetails"
@@ -162,7 +162,7 @@ const getFemaleActorsWithDramas = async () => {
   const females = await Female_actor.aggregate([
     {
       $lookup: {
-        from: "dramas", // or "darama" if you kept that name
+        from: "daramas", // or "darama" if you kept that name
         localField: "popularDarams",
         foreignField: "_id",
         as: "dramaDetails"
@@ -192,7 +192,7 @@ const getOSTWithDramas = async () => {
   const ost = await OST.aggregate([
     {
       $lookup: {
-        from: "dramas", // or "darama" if you kept that name
+        from: "daramas", // or "darama" if you kept that name
         localField: "popularDarams",
         foreignField: "_id",
         as: "dramaDetails"
