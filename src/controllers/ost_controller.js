@@ -5,10 +5,10 @@ import { OST } from "../models/ost_model.js";
 
 
 const addOST = asyncHandeler(async(req,res)=>{
-    const {username,fullName,img} = req.body
+    const {fullName,singer,Link} = req.body
 
       const existedost = await OST.findOne({
-        $or:[{username},{fullName}]
+        $or:[{fullName}]
     })
 
     if (existedost) {
@@ -16,15 +16,16 @@ const addOST = asyncHandeler(async(req,res)=>{
     }
 
     if (
-        [fullName,username].some((field)=> field?.trim()==="")
+        [fullName,singer].some((field)=> field?.trim()==="")
     ) {
         throw new ApiError(400,"Fields are missing")
     }
 
     const ost = await OST.create({
-        username,
+        
         fullName,
-        img
+        singer,
+        Link
     })
 
     if (!ost) {

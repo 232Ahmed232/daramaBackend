@@ -9,6 +9,11 @@ const ostSchema = new mongoose.Schema({
         trim:true,
         index:true      
     },
+    singer:{
+        type:String,
+        trim:true,
+        index:true      
+    },
 
     Link:{
         type:String,

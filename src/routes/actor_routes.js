@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { addActor } from "../controllers/actor_controller.js";
+import { addActor, getActor } from "../controllers/actor_controller.js";
 
 
 
 const router = Router()
 
 
-router.route("/add").get(addActor)
+router.route("/add").post(addActor)
+router.route("/get").get(getActor)
 
 export default router

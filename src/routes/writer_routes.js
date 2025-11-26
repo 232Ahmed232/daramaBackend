@@ -5,6 +5,6 @@ import { addWriter } from "../controllers/writer_controller.js";
 const router = Router()
 
 
-router.route("/add").get(addWriter)
+router.route("/add").post(addWriter)
 
 export default router

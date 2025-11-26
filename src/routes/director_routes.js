@@ -5,6 +5,6 @@ import { addDirector } from "../controllers/director_controller.js";
 const router = Router()
 
 
-router.route("/add").get(addDirector)
+router.route("/add").post(addDirector)
 
 export default router

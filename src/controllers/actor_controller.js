@@ -2,6 +2,7 @@ import { asyncHandeler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Actor } from "../models/actor_model.js";
+import { getActorsWithDramas } from "../db/Db_aggregation.js";
 
 
 const addActor = asyncHandeler(async(req,res)=>{
@@ -37,9 +38,17 @@ const addActor = asyncHandeler(async(req,res)=>{
 
 })
 
+const getActor = asyncHandeler(async(req,res)=>{
+    const gettingActors = await getActorsWithDramas()
+    res.status(200).json(
+        new ApiResponse(200,gettingActors, "Actors with Daramas")
+      )
+})
+
 
 export {
-    addActor
+    addActor,
+    getActor
 }
 
 
