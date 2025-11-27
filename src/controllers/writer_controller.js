@@ -59,7 +59,7 @@ const popularDramaswithWriter = asyncHandeler(async(req,res)=>{
                     )
     })
 
-    
+
 const getWriterwithDrama = asyncHandeler(async(req,res)=>{
     const gettingWriters = await getWriterwithDrama()
 
@@ -70,7 +70,8 @@ const getWriterwithDrama = asyncHandeler(async(req,res)=>{
 
 export {
     addWriter,
-    popularDramaswithWriter
+    popularDramaswithWriter,
+    getWriterwithDrama
 }
 
 
