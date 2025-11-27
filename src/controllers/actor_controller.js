@@ -55,7 +55,6 @@ const addingPopulardarams = asyncHandeler(async(req,res)=>{
     )   
     await changeActor.save()
      
-     const gettingActors = await getActorsWithDramas()
         res.status(200).json(
         new ApiResponse(200,changeActor, "Updated actors")
       )

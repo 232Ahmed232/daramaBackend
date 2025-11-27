@@ -2,6 +2,7 @@ import { asyncHandeler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Writer } from "../models/writer_model.js";
+import { Darama } from "../models/darama_model.js";
 
 
 const addWriter = asyncHandeler(async(req,res)=>{
@@ -38,9 +39,38 @@ const addWriter = asyncHandeler(async(req,res)=>{
 
 })
 
+const popularDramaswithWriter = asyncHandeler(async(req,res)=>{
+        const drama = await Darama.find({name:{$in:['Tere Bin']}})
+    
+        const changeWriter = await Writer.findOneAndUpdate(
+                    {
+                        fullName:"Yumna Zaidi"
+                    },
+                    {
+                        $set:{
+                        popularDarams:drama.map(darm => darm)
+                        }
+                    },
+                    { new: true },
+                )   
+                await changeWriter.save()
+                res.status(200).json(
+                        new ApiResponse(200,changeWriter, "Updated")
+                    )
+    })
+
+    
+const getWriterwithDrama = asyncHandeler(async(req,res)=>{
+    const gettingWriters = await getWriterwithDrama()
+
+    res.status(200).json(
+                        new ApiResponse(200,gettingWriters, "Updated Writers")
+                    )
+})
 
 export {
-    addWriter
+    addWriter,
+    popularDramaswithWriter
 }
 
 

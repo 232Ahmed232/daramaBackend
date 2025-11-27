@@ -2,6 +2,8 @@ import { asyncHandeler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Director } from "../models/director_model.js";
+import { Darama } from "../models/darama_model.js";
+import { getDirectorsWithDramas } from "../db/Db_aggregation.js";
 
 
 const addDirector = asyncHandeler(async(req,res)=>{
@@ -37,9 +39,40 @@ const addDirector = asyncHandeler(async(req,res)=>{
 
 })
 
+const popularDramaDirector = asyncHandeler(async(req,res)=>{
+    const drama = await Darama.find({name:{$in:['Tere Bin']}})
+    
+    const changeDirector = await Director.findOneAndUpdate(
+            {
+                fullName:"Siraj-ul-Haque"
+            },
+            {
+                $set:{
+                popularDarams:drama.map(darm => darm)
+                }
+            },
+            { new: true },
+        )   
+        await changeDirector.save()
+        res.status(200).json(
+                new ApiResponse(200,changeDirector, "Updated actors")
+              )
+})
+
+
+
+const getDirector = asyncHandeler(async(req,res)=>{
+    const gettingDirector = await getDirectorsWithDramas()
+    res.status(200).json(
+                new ApiResponse(200,gettingDirector, "Directors with Dramas")
+              )
+})
+
 
 export {
-    addDirector
+    addDirector,
+    popularDramaDirector,
+    getDirector
 }
 
 
