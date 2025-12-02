@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Writer } from "../models/writer_model.js";
 import { Darama } from "../models/darama_model.js";
+import { User } from "../models/user_model.js";
 
 
 const addWriter = asyncHandeler(async(req,res)=>{
@@ -68,10 +69,41 @@ const getWriterwithDrama = asyncHandeler(async(req,res)=>{
                     )
 })
 
+
+const getWritersVoted = asyncHandeler(async(req,res)=>{
+    const userId = req.user?._id
+    const userAlreadyVoted = await User.findById(userId)
+    if (userAlreadyVoted.isVotedWriter) {
+       throw new ApiError(409,"User already voted")
+    }
+
+    const WriterId = req.params._id
+    // console.log(actorId);
+    
+   const VotedWriter =  await Writer.findById(WriterId)
+        
+    if (VotedWriter) {
+        VotedWriter.votedBy.push({user:userId})
+        VotedWriter.votes +=1 
+
+        await VotedWriter.save()
+
+        userAlreadyVoted.isVotedWriter = true
+        await userAlreadyVoted.save()
+        res.status(200).json(
+        new ApiResponse(200,VotedWriter, "Writers with votes")
+      )
+    }else{
+        throw new ApiError(409,"User Not  voted")
+    }    
+
+})
+
 export {
     addWriter,
     popularDramaswithWriter,
-    getWriterwithDrama
+    getWriterwithDrama,
+    getWritersVoted
 }
 
 

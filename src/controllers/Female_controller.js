@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Female_actor } from "../models/Female_actor.js";
 import { Darama } from "../models/darama_model.js";
 import { getFemaleActorsWithDramas } from "../db/Db_aggregation.js";
+import { User } from "../models/user_model.js";
 
 const addFemaleActor = asyncHandeler(async(req,res)=>{
     const {username,fullName,img} = req.body
@@ -67,12 +68,41 @@ const getFemalewithDrama = asyncHandeler(async(req,res)=>{
                 )
 })
 
+const getFemaleVoted = asyncHandeler(async(req,res)=>{
+    const userId = req.user?._id
+    const userAlreadyVoted = await User.findById(userId)
+    if (userAlreadyVoted.isVotedFemaleActor) {
+       throw new ApiError(409,"User already voted")
+    }
+
+    const FemaleId = req.params._id
+    // console.log(actorId);
+    
+   const VotedFemale =  await Female_actor.findById(FemaleId)
+        
+    if (VotedFemale) {
+        VotedFemale.votedBy.push({user:userId})
+        VotedFemale.votes +=1 
+
+        await VotedFemale.save()
+
+        userAlreadyVoted.isVotedFemaleActor = true
+        await userAlreadyVoted.save()
+        res.status(200).json(
+        new ApiResponse(200,VotedFemale, "Directors with votes")
+      )
+    }else{
+        throw new ApiError(409,"User Not  voted")
+    }    
+
+})
 
 
 export {
     addFemaleActor,
     popularDramaFemale,
-    getFemalewithDrama
+    getFemalewithDrama,
+    getFemaleVoted
 }
 
 

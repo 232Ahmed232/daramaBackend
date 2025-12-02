@@ -26,7 +26,18 @@ const ostSchema = new mongoose.Schema({
             }
     ],
 
-
+    votedBy:[
+           { 
+            user : {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
+            },
+             votedAt: {
+                    type: Date,
+                    default: Date.now()
+                }
+        }
+    ],
     votes:{
         type:Number,
         default:0

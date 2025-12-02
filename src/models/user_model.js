@@ -39,6 +39,22 @@ const userSchema = new Schema({
         type:Boolean,
         default:false
     },
+    isVotedFemaleActor:{
+        type:Boolean,
+        default:false
+    },
+    isVotedDirector:{
+        type:Boolean,
+        default:false
+    },
+    isVotedWriter:{
+        type:Boolean,
+        default:false
+    },
+    isVotedOst:{
+        type:Boolean,
+        default:false
+    },
     password:{
         type:String,
         required:[true,"Password is requiured"]

@@ -77,7 +77,7 @@ const getActorVoted = asyncHandeler(async(req,res)=>{
     }
 
     const actorId = req.params._id
-    console.log(actorId);
+    // console.log(actorId);
     
    const VotedActor =  await Actor.findById(actorId)
         

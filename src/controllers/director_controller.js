@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Director } from "../models/director_model.js";
 import { Darama } from "../models/darama_model.js";
 import { getDirectorsWithDramas } from "../db/Db_aggregation.js";
+import { User } from "../models/user_model.js";
 
 
 const addDirector = asyncHandeler(async(req,res)=>{
@@ -68,11 +69,41 @@ const getDirector = asyncHandeler(async(req,res)=>{
               )
 })
 
+const getDirectorVoted = asyncHandeler(async(req,res)=>{
+    const userId = req.user?._id
+    const userAlreadyVoted = await User.findById(userId)
+    if (userAlreadyVoted.isVotedDirector) {
+       throw new ApiError(409,"User already voted")
+    }
+
+    const directorId = req.params._id
+    // console.log(actorId);
+    
+   const VotedDirector =  await Director.findById(directorId)
+        
+    if (VotedDirector) {
+        VotedDirector.votedBy.push({user:userId})
+        VotedDirector.votes +=1 
+
+        await VotedDirector.save()
+
+        userAlreadyVoted.isVotedDirector = true
+        await userAlreadyVoted.save()
+        res.status(200).json(
+        new ApiResponse(200,VotedDirector, "Directors with votes")
+      )
+    }else{
+        throw new ApiError(409,"User Not  voted")
+    }    
+
+})
+
 
 export {
     addDirector,
     popularDramaDirector,
-    getDirector
+    getDirector,
+    getDirectorVoted,
 }
 
 
