@@ -44,24 +44,17 @@ const registerUser = asyncHandeler(async(req,res)=>{
 
     // console.log(req.files);
     
-    const avatarLocalPath = req.files?.avatar[0]?.path
     
     
     
 
-    if (!avatarLocalPath) {
-        throw new ApiError(400,"Avatar files required")
-    }
+   
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-
-    if (!avatar) {
-        throw new ApiError(400,"Avatar files required in cloudinary")
-    }
+   
 
    const user =  await User.create({
         fullName,
-        avatar:avatar?.url || "",
+        
         
         email,
         password,

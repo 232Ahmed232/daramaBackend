@@ -26,10 +26,7 @@ const userSchema = new Schema({
         index:true
         
     },
-    avatar:{
-        type:String,
-        default:"https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-    },
+    
     
     rating:[
         {
@@ -37,6 +34,11 @@ const userSchema = new Schema({
             ref:"Rating"
         }
     ],
+
+    isVotedActor:{
+        type:Boolean,
+        default:false
+    },
     password:{
         type:String,
         required:[true,"Password is requiured"]

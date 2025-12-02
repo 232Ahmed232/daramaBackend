@@ -27,7 +27,18 @@ const actorSchema = new mongoose.Schema({
             ref:"Darama"
         }
     ],
-
+    votedBy:[
+       { 
+        user : {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        },
+         votedAt: {
+                type: Date,
+                default: Date.now()
+            }
+    }
+    ],
 
     votes:{
         type:Number,

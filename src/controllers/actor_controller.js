@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Actor } from "../models/actor_model.js";
 import { getActorsWithDramas } from "../db/Db_aggregation.js";
 import { Darama } from "../models/darama_model.js";
+import { User } from "../models/user_model.js";
 
 
 const addActor = asyncHandeler(async(req,res)=>{
@@ -68,12 +69,42 @@ const getActor = asyncHandeler(async(req,res)=>{
       )
 })
 
+const getActorVoted = asyncHandeler(async(req,res)=>{
+    const userId = req.user?._id
+    const userAlreadyVoted = await User.findById(userId)
+    if (userAlreadyVoted.isVotedActor) {
+       throw new ApiError(409,"User already voted")
+    }
+
+    const actorId = req.params._id
+    console.log(actorId);
+    
+   const VotedActor =  await Actor.findById(actorId)
+        
+    if (VotedActor) {
+        VotedActor.votedBy.push({user:userId})
+        VotedActor.votes +=1 
+
+        await VotedActor.save()
+
+        userAlreadyVoted.isVotedActor = true
+        await userAlreadyVoted.save()
+        res.status(200).json(
+        new ApiResponse(200,VotedActor, "Actors with votes")
+      )
+    }else{
+        throw new ApiError(409,"User Not  voted")
+    }    
+
+})
+
 
 
 export {
     addActor,
     getActor,
-    addingPopulardarams
+    addingPopulardarams,
+    getActorVoted,
 }
 
 
