@@ -8,10 +8,10 @@ import { User } from "../models/user_model.js";
 
 
 const addActor = asyncHandeler(async(req,res)=>{
-    const {username,fullName,img} = req.body
+    const {fullName,img} = req.body
 
       const existedActor = await Actor.findOne({
-        $or:[{username},{fullName}]
+        fullName
     })
 
     if (existedActor) {
@@ -19,13 +19,13 @@ const addActor = asyncHandeler(async(req,res)=>{
     }
 
     if (
-        [fullName,username].some((field)=> field?.trim()==="")
+        [fullName].some((field)=> field?.trim()==="")
     ) {
         throw new ApiError(400,"Fields are missing")
     }
 
     const actor = await Actor.create({
-        username,
+        username:"",
         fullName,
         img
     })
@@ -61,6 +61,28 @@ const addingPopulardarams = asyncHandeler(async(req,res)=>{
       )
 })
 
+
+const addChar = asyncHandeler(async(req,res)=>{
+    const {username,fullName} = req.body
+
+    const changeActor = await Actor.findOneAndUpdate(
+        {
+            fullName
+        },
+        {
+            $set:{
+                username:username
+            }
+        },
+        { new: true },
+    )   
+
+        await changeActor.save()
+
+        res.status(200).json(
+        new ApiResponse(200,changeActor, "Updated actors")
+      )
+})
 
 const getActor = asyncHandeler(async(req,res)=>{
     const gettingActors = await getActorsWithDramas()
@@ -105,6 +127,7 @@ export {
     getActor,
     addingPopulardarams,
     getActorVoted,
+    addChar
 }
 
 

@@ -42,6 +42,8 @@ const addOST = asyncHandeler(async(req,res)=>{
 
 const getOstVoted = asyncHandeler(async(req,res)=>{
     const userId = req.user?._id
+    console.log(req.user);
+    
     const userAlreadyVoted = await User.findById(userId)
     if (userAlreadyVoted.isVotedOst) {
        throw new ApiError(409,"User already voted")
