@@ -2,6 +2,7 @@ import { asyncHandeler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { OST } from "../models/ost_model.js";
+import { User } from "../models/user_model.js";
 
 
 const addOST = asyncHandeler(async(req,res)=>{
@@ -39,8 +40,38 @@ const addOST = asyncHandeler(async(req,res)=>{
 })
 
 
+const getOstVoted = asyncHandeler(async(req,res)=>{
+    const userId = req.user?._id
+    const userAlreadyVoted = await User.findById(userId)
+    if (userAlreadyVoted.isVotedOst) {
+       throw new ApiError(409,"User already voted")
+    }
+
+    const OstId = req.params._id
+    // console.log(actorId);
+    
+   const VotedOst =  await OST.findById(OstId)
+        
+    if (VotedOst) {
+        VotedOst.votedBy.push({user:userId})
+        VotedOst.votes +=1 
+
+        await VotedOst.save()
+
+        userAlreadyVoted.isVotedOst = true
+        await userAlreadyVoted.save()
+        res.status(200).json(
+        new ApiResponse(200,VotedOst, "Ost with votes")
+      )
+    }else{
+        throw new ApiError(409,"User Not  voted")
+    }    
+
+})
+
 export {
-    addOST
+    addOST,
+    getOstVoted
 }
 
 
