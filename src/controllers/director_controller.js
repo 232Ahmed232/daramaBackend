@@ -8,10 +8,10 @@ import { User } from "../models/user_model.js";
 
 
 const addDirector = asyncHandeler(async(req,res)=>{
-    const {username,fullName,img} = req.body
+    const {fullName,img} = req.body
 
       const existedDirector = await Director.findOne({
-        $or:[{username},{fullName}]
+       fullName
     })
 
     if (existedDirector) {
@@ -19,13 +19,12 @@ const addDirector = asyncHandeler(async(req,res)=>{
     }
 
     if (
-        [fullName,username].some((field)=> field?.trim()==="")
+        [fullName].some((field)=> field?.trim()==="")
     ) {
         throw new ApiError(400,"Fields are missing")
     }
 
     const director = await Director.create({
-        username,
         fullName,
         img
     })

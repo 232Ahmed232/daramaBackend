@@ -7,11 +7,11 @@ import { User } from "../models/user_model.js";
 
 
 const addWriter = asyncHandeler(async(req,res)=>{
-    const {username,fullName,img} = req.body
+    const {fullName,img} = req.body
 
 
       const existedWriter = await Writer.findOne({
-        $or:[{username},{fullName}]
+        fullName
     })
 
     if (existedWriter) {
@@ -19,13 +19,13 @@ const addWriter = asyncHandeler(async(req,res)=>{
     }
 
     if (
-        [fullName,username].some((field)=> field?.trim()==="")
+        [fullName].some((field)=> field?.trim()==="")
     ) {
         throw new ApiError(400,"Fields are missing")
     }
 
     const writer = await Writer.create({
-        username,
+        
         fullName,
         img
     })

@@ -34,6 +34,8 @@ import director_routes from "./routes/director_routes.js"
 
 import ost_routes from "./routes/ost_routes.js"
 
+import producer_routes from "./routes/producer_route.js"
+
 
 app.use("/api/v1/users",userRouter)
 
@@ -46,6 +48,8 @@ app.use("/api/v1/Femaleactors",Femaleactorroutes)
 app.use("/api/v1/writer",writerroutes)
 
 app.use("/api/v1/director",director_routes)
+
+app.use("/api/v1/producer",producer_routes)
 
 app.use("/api/v1/daramas",daramaRoutes)
 

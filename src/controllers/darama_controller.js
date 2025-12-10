@@ -42,9 +42,9 @@ const addDarama = asyncHandeler(async (req, res) => {
     directors: directors.map(director => director._id),
     producers: ["Abdullah Kadwani", "Asad Qureshi"],
     genres: [
-      "Drama",
-      "Romance",
-      "Action"],
+      {0:"Drama"},
+      {1:"Romance"},
+      {2:"Action"}],
     actors: actors.map(actor => actor._id), // ✅ multiple actors
     Female_actors: Female.map(Fem => Fem._id), // ✅ multiple actors
   });
