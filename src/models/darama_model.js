@@ -45,14 +45,14 @@ const daramaSchema = new Schema({
     ],
     producers:[
         {
-        type:String,
-    },
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Director"
+        }
     ],
-    generes:[
-        {
-        type:String,
-    },
-    ],
+   genres: {
+    type: [String],
+    required: true
+  },
     actors:[
         {
             type:mongoose.Schema.Types.ObjectId,

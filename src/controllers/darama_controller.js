@@ -8,6 +8,7 @@ import { Female_actor } from "../models/Female_actor.js";
 import { Director } from "../models/director_model.js";
 import { OST } from "../models/ost_model.js";
 import { Writer } from "../models/writer_model.js";
+import { Producer } from "../models/producer_model.js";
 
 
 
@@ -15,10 +16,10 @@ import { Writer } from "../models/writer_model.js";
 
 const addDarama = asyncHandeler(async (req, res) => {
   const actors = await Actor.find({
-    fullName: { $in: ["Wahaj Ali"] }
+    fullName: { $in: ["Wahaj Ali","Agha Mustafa Hassan","Haris Waheed"] }
   });
   const Female = await Female_actor.find({
-    fullName: { $in: ["Yumna Zaidi"] }
+    fullName: { $in: ["Yumna Zaidi","Bushra Ansari","Sabeena Farooq"] }
   });
   const directors = await Director.find({
     fullName: { $in: ["Siraj-ul-Haque"] }
@@ -28,6 +29,9 @@ const addDarama = asyncHandeler(async (req, res) => {
   });
   const writers = await Writer.find({
     fullName: { $in: ["Nooran Makhdoom"] }
+  });
+  const producers = await Producer.find({
+    fullName: { $in: ["Asad qureshi","Abdullah Kadwani"] }
   });
 
   const drama = new Darama({
@@ -40,11 +44,8 @@ const addDarama = asyncHandeler(async (req, res) => {
     noOfEpisodes: 58,
     writers: writers.map(writer => writer._id),
     directors: directors.map(director => director._id),
-    producers: ["Abdullah Kadwani", "Asad Qureshi"],
-    genres: [
-      {0:"Drama"},
-      {1:"Romance"},
-      {2:"Action"}],
+    producers: producers.map(producer => producer._id),
+    genres: ["Drama","Romance","Action"],
     actors: actors.map(actor => actor._id), // ✅ multiple actors
     Female_actors: Female.map(Fem => Fem._id), // ✅ multiple actors
   });
