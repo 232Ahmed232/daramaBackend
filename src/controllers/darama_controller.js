@@ -16,32 +16,32 @@ import { Producer } from "../models/producer_model.js";
 
 const addDarama = asyncHandeler(async (req, res) => {
   const actors = await Actor.find({
-    fullName: { $in: ["Wahaj Ali","Agha Mustafa Hassan","Haris Waheed"] }
+    fullName: { $in: ["Danish Taimoor","Nabeel Zafar","Faizan Sheikh"] }
   });
   const Female = await Female_actor.find({
-    fullName: { $in: ["Yumna Zaidi","Bushra Ansari","Sabeena Farooq"] }
+    fullName: { $in: ["Arjumand Rahim","Nadia Afgan","Sarah Khan"] }
   });
   const directors = await Director.find({
-    fullName: { $in: ["Siraj-ul-Haque"] }
+    fullName: { $in: ["Aehsun Talish"] }
   });
   const ost = await OST.find({
-    fullName: { $in: ["Tere Bin | OST"] }
+    fullName: { $in: ["SHER  | OST"] }
   });
   const writers = await Writer.find({
-    fullName: { $in: ["Nooran Makhdoom"] }
+    fullName: { $in: ["Zanjabeel Asim Shah"] }
   });
   const producers = await Producer.find({
-    fullName: { $in: ["Asad qureshi","Abdullah Kadwani"] }
+    fullName: { $in: ["Abdullah Seja"] }
   });
 
   const drama = new Darama({
-    name: "Tere Bin",
-    poster: "https://tse4.mm.bing.net/th/id/OIP.Bnh4zNfWsn87McZTCSoWRwHaEE?rs=1&pid=ImgDetMain&o=7&rm=3",
-    plot: "The head of a village in Sindh as well as a Feudal lord, Murtasim Shahnawaz Khan (Wahaj Ali) is a handsome, charismatic and dominating young man, who is on a stroll in the fields to discern the progress of the crops when one of the farmers mournfully informs him of the threats they are agonised with and enlightens him of the rising menace to their fields imposed by a cutthroat rival in the village named, Malik Mukhtar and his vile son, Malik Zubair. Being the village's premier, Murtasim heeds the whole situation and it quite incenses him. He's known to be responsible as well as ruthless when it comes to protecting and ensuring his people's safety. When Malik tries to create problems over a mere land that he desires which is owned by Murtasim, it's the cue for Murtasim to assert his true dominance. Hence, to instill terror and warn his foes of further barbarity against his people and meddling in the village's peace, Murtasim barges into Malik's mansion and threatens to kill his son —thus fueling the red-hot rivalry further.",
+    name: "Shair",
+    poster: "https://www.pakdramas.com/wp-content/uploads/2024/09/Shair-Drama-280x414.webp",
+    plot: "Although the specifics of the plot remain a mystery, Shair is set to delve into profound themes of love, loss, and redemption. The drama is expected to weave a tapestry of complex relationships and multifaceted characters, with a narrative full of unexpected twists and emotional depth. With its promise of dramatic intensity and heartfelt storytelling, Shair is poised to captivate audiences and leave a lasting impression.",
     ost: ost.map(os => os._id),
-    year: 2022,
-    channel: "GEO",
-    noOfEpisodes: 58,
+    year: 2025,
+    channel: "ARY",
+    noOfEpisodes: 39,
     writers: writers.map(writer => writer._id),
     directors: directors.map(director => director._id),
     producers: producers.map(producer => producer._id),

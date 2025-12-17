@@ -25,7 +25,6 @@ const addWriter = asyncHandeler(async(req,res)=>{
     }
 
     const writer = await Writer.create({
-        
         fullName,
         img
     })
