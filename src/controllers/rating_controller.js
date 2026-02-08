@@ -7,6 +7,11 @@ export const addRating = async (req, res) => {
     const userId = req.user._id; // comes from JWT middleware
     const { dramaId, stars, comment } = req.body;
 
+    console.log(dramaId);
+    console.log(stars);
+    console.log(comment);
+    
+
     // 1️⃣ Validate required fields
     if (!dramaId || !stars || !comment) {
       return res.status(400).json({ message: "Drama ID, stars, and comment are required" });

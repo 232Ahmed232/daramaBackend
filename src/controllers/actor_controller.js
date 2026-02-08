@@ -121,13 +121,40 @@ const getActorVoted = asyncHandeler(async(req,res)=>{
 })
 
 
+const applyActorRole = asyncHandeler(async(req,res)=>{
+    const actorId = req.params._id
+    // console.log(actorId);
+
+    const {role , rolename} = req.body
+    
+   const ActorRole =  await Actor.findById(actorId)
+
+   if (ActorRole) {
+        ActorRole.username = rolename
+        ActorRole.isActive = true
+        ActorRole.role = role
+        await ActorRole.save()
+        res.status(200).json(
+        new ApiResponse(200,ActorRole, "Actors with votes")
+      )
+   }else{
+        throw new ApiError(409,"User Not  voted")
+    }
+
+
+
+
+   
+})
+
 
 export {
     addActor,
     getActor,
     addingPopulardarams,
     getActorVoted,
-    addChar
+    addChar,
+    applyActorRole
 }
 
 

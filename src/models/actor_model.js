@@ -23,6 +23,10 @@ const actorSchema = new mongoose.Schema({
             ref:"Darama"
         }
     ],
+
+    role:{
+        type:String
+    },
     votedBy:[
        { 
         user : {
